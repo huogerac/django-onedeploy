@@ -32,8 +32,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """ """
         BASE_DIR = settings.BASE_DIR
-        SITE_ROOT = dirname(BASE_DIR)
-        REPO_DIR = abspath(join(SITE_ROOT, pardir))
+        REPO_DIR = str(BASE_DIR)
         PROJECT_NAME = basename(BASE_DIR)
 
         environment = options.get('env', '')

@@ -29,8 +29,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """ """
         BASE_DIR = settings.BASE_DIR
-        SITE_ROOT = dirname(BASE_DIR)
-        REPO_DIR = abspath(join(SITE_ROOT, pardir))
+        REPO_DIR = str(BASE_DIR)
         VIRTUALENV_DIR = abspath(join(REPO_DIR, pardir))
         PROJECT_NAME = basename(BASE_DIR)
 
@@ -52,7 +51,7 @@ class Command(BaseCommand):
             'user': str(user),
             'site_id': site_id,
             'server_url': server_url,
-            'project_base_folder': SITE_ROOT,
+            'project_base_folder': REPO_DIR,
             'virtualenv_folder': VIRTUALENV_DIR,
         }
 
