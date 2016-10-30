@@ -22,9 +22,6 @@ class Command(BaseCommand):
                     action='store', dest='nginx', type="string",
                     help='Set the NGINX folder. default: /etc/nginx',
                     default='/etc/nginx'),
-        make_option('--sitename',
-                    action='store', dest='sitename', type='string',
-                    help='the nginx file name base'),
     )
     help = "Creates the NGINX file over the site-available folder"
     args = "--env --url [--nginx]"
@@ -37,10 +34,6 @@ class Command(BaseCommand):
 
         environment = options.get('env', '')
         server_url = options.get('url', '')
-        sitename = options.get('sitename', '')
-
-        if not sitename:
-            sitename = server_url
 
         NGINX_TARGET_FOLDER = options.get('nginx', '/etc/nginx')
 
@@ -60,8 +53,8 @@ class Command(BaseCommand):
 
         NGINX_CONF_SOURCE = "{0}/nginx.{1}" \
             .format(join(ROOT_DIR, 'config/nginx'), environment)
-        NGINX_FILE = "{0}/sites-available/{1}_{2}_{3}" \
-            .format(NGINX_TARGET_FOLDER, PROJECT_NAME, sitename, environment)
+        NGINX_FILE = "{0}/sites-available/{1}_{2}" \
+            .format(NGINX_TARGET_FOLDER, PROJECT_NAME, environment)
 
         try:
             content = open(NGINX_CONF_SOURCE, 'r')

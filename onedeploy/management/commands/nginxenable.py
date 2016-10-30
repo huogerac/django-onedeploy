@@ -14,9 +14,6 @@ class Command(BaseCommand):
         make_option('--env',
                     action='store', dest='env', type="string",
                     help='Set environment. e.g. staging or production'),
-        make_option('--url',
-                    action='store', dest='url', type="string",
-                    help='Set the server url. e.g. yourdomain.com'),
         make_option('--nginx',
                     action='store', dest='nginx', type="string",
                     help='Set the NGINX folder. default: /etc/nginx',
@@ -32,25 +29,23 @@ class Command(BaseCommand):
         PROJECT_NAME = str(basename(abspath(PROJECT_DIR)))
 
         environment = options.get('env', '')
-        server_url = options.get('url', '')
         NGINX_TARGET_FOLDER = options.get('nginx', '/etc/nginx')
 
         if not environment or not server_url:
-            self.stdout.write('---> ERROR: You must set the --env and --url parameters.\n')
-            self.stdout.write('./manage.py nginxenable --env=staging --url=mydomain.com\n')
+            self.stdout.write('---> ERROR: You must set the --env and --nginx parameters.\n')
+            self.stdout.write('./manage.py nginxenable --env=staging --nginx=/etc/nginx\n')
             self.stdout.write('./manage.py nginxenable --help\n')
             return
 
         user_args = {
             'nginx': NGINX_TARGET_FOLDER,
             'project_name': PROJECT_NAME,
-            'domain': server_url,
             'env': environment,
         }
 
-        NGINX_AVAILABLE = "{nginx}/sites-available/{project_name}_{domain}_{env}" \
+        NGINX_AVAILABLE = "{nginx}/sites-available/{project_name}_{env}" \
             .format(**user_args)
-        NGINX_ENABLED = "{nginx}/sites-enabled/{project_name}_{domain}_{env}" \
+        NGINX_ENABLED = "{nginx}/sites-enabled/{project_name}_{env}" \
             .format(**user_args)
 
         if not lexists(NGINX_ENABLED):
