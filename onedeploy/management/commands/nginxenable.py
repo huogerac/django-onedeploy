@@ -31,7 +31,7 @@ class Command(BaseCommand):
         environment = options.get('env', '')
         NGINX_TARGET_FOLDER = options.get('nginx', '/etc/nginx')
 
-        if not environment or not server_url:
+        if not environment:
             self.stdout.write('---> ERROR: You must set the --env and --nginx parameters.\n')
             self.stdout.write('./manage.py nginxenable --env=staging --nginx=/etc/nginx\n')
             self.stdout.write('./manage.py nginxenable --help\n')
