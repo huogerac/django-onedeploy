@@ -27,8 +27,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """ """
-        BASE_DIR = settings.BASE_DIR
-        PROJECT_NAME = basename(BASE_DIR)
+        ROOT_DIR = str(settings.ROOT_DIR)
+        PROJECT_DIR = str(settings.PROJECT_DIR)
+        PROJECT_NAME = basename(ROOT_DIR)
 
         environment = options.get('env', '')
         server_url = options.get('url', '')
@@ -42,14 +43,14 @@ class Command(BaseCommand):
 
         user_args = {
             'nginx': NGINX_TARGET_FOLDER,
-            'project': PROJECT_NAME,
+            'project_name': PROJECT_NAME,
             'domain': server_url,
             'env': environment,
         }
 
-        NGINX_AVAILABLE = "{nginx}/sites-available/{project}_{domain}_{env}" \
+        NGINX_AVAILABLE = "{nginx}/sites-available/{project_name}_{domain}_{env}" \
             .format(**user_args)
-        NGINX_ENABLED = "{nginx}/sites-enabled/{project}_{domain}_{env}" \
+        NGINX_ENABLED = "{nginx}/sites-enabled/{project_name}_{domain}_{env}" \
             .format(**user_args)
 
         if not lexists(NGINX_ENABLED):

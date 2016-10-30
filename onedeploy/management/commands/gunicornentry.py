@@ -28,10 +28,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """ """
-        BASE_DIR = settings.BASE_DIR
-        REPO_DIR = str(BASE_DIR)
-        VIRTUALENV_DIR = abspath(join(REPO_DIR, pardir))
-        PROJECT_NAME = basename(BASE_DIR)
+        ROOT_DIR = str(settings.ROOT_DIR)
+        PROJECT_DIR = str(settings.PROJECT_DIR)
+        PROJECT_NAME = basename(settings.ROOT_DIR)
+        VIRTUALENV_DIR = abspath(join(settings.ROOT_DIR, pardir))
 
         environment = options.get('env', '')
         user = options.get('user', '')
@@ -48,15 +48,16 @@ class Command(BaseCommand):
         DATA = {
             'environment': environment,
             'project_name': PROJECT_NAME,
+            'project_name_upper': PROJECT_NAME.upper(),
             'user': str(user),
             'site_id': site_id,
             'server_url': server_url,
-            'project_base_folder': REPO_DIR,
+            'root_dir': ROOT_DIR,
             'virtualenv_folder': VIRTUALENV_DIR,
         }
 
         GUNICORN_CONF_SOURCE = "{0}/gunicorn.{1}".format(
-            join(REPO_DIR, 'config/nginx'), environment)
+            join(ROOT_DIR, 'config/nginx'), environment)
         GUNICORN_FILE = "/etc/init/gunicorn-{0}_{1}_{2}.conf".format(
             PROJECT_NAME, server_url, environment)
 
