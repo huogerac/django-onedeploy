@@ -31,7 +31,7 @@ class Command(BaseCommand):
         ROOT_DIR = str(settings.ROOT_DIR)
         PROJECT_DIR = str(settings.PROJECT_DIR)
         PROJECT_NAME = basename(settings.ROOT_DIR)
-        VIRTUALENV_DIR = abspath(join(settings.ROOT_DIR, pardir))
+        VIRTUALENV_DIR = abspath(join(ROOT_DIR, pardir))
 
         environment = options.get('env', '')
         user = options.get('user', '')
