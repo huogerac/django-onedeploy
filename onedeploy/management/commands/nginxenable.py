@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 from os import symlink
-from os.path import basename, lexists
+from os.path import abspath, basename, dirname, join, lexists
 
 from optparse import make_option
 
