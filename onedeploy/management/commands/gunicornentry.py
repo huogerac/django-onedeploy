@@ -30,7 +30,7 @@ class Command(BaseCommand):
         """ """
         ROOT_DIR = str(settings.ROOT_DIR)
         PROJECT_DIR = str(settings.PROJECT_DIR)
-        PROJECT_NAME = basename(settings.ROOT_DIR)
+        PROJECT_NAME = basename(settings.PROJECT_DIR)
         VIRTUALENV_DIR = abspath(join(ROOT_DIR, pardir))
 
         environment = options.get('env', '')
@@ -58,8 +58,8 @@ class Command(BaseCommand):
 
         GUNICORN_CONF_SOURCE = "{0}/gunicorn.{1}".format(
             join(ROOT_DIR, 'config/nginx'), environment)
-        GUNICORN_FILE = "/etc/init/gunicorn-{0}_{1}_{2}.conf".format(
-            PROJECT_NAME, server_url, environment)
+        GUNICORN_FILE = "/etc/init/gunicorn-{0}_{1}.conf".format(
+            PROJECT_NAME, environment)
 
         try:
             content = open(GUNICORN_CONF_SOURCE, 'r')
