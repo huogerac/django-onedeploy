@@ -32,8 +32,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """ """
         ROOT_DIR = str(settings.ROOT_DIR)
-        PROJECT_DIR = str(settings.PROJECT_DIR)
-        PROJECT_NAME = basename(settings.ROOT_DIR)
+        PROJECT_DIR = str(abspath(settings.PROJECT_DIR))
+        PROJECT_NAME = str(basename(abspath(PROJECT_DIR)))
 
         environment = options.get('env', '')
         server_url = options.get('url', '')
